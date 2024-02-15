@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const consultarEstudiante = async (id) =>{
-    const data = axios.get(`http://localhost:8082/API/v1.0/Matricula/estudiantes/${id}`).then(r => r.data)
+    const data = axios.get(`http://localhost:8082/API/v1.0/Matricula/self/estudiantes/${id}`).then(r => r.data)
     console.log(data);
     return data;
 }

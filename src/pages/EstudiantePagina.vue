@@ -1,5 +1,5 @@
 <template>
-  <h1>Estudainte pagina</h1>
+  <h1>Estudiante pagina</h1>
   <Estudiante/>
   
 </template>
