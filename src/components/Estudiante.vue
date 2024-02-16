@@ -9,8 +9,12 @@
     <div class="form">
       <h2>Estudiante</h2>
       <p type="C&eacute;dula:"><input v-model="cedula" type="text" /></p>
-      <p type="Nombre:"><input v-model="nombre" type="text" /></p>
-      <p type="Apellido:"><input v-model="apellido" type="text" /></p>
+      <p type="Nombre:">
+        <input v-model="nombre" placeholder="Nombre" type="text" />
+      </p>
+      <p type="Apellido:">
+        <input v-model="apellido" placeholder="Apellido" type="text" />
+      </p>
       <p type="G&eacute;nero:"><input v-model="genero" type="text" /></p>
       <p type="Nacionalidad:"><input v-model="nacionalidad" type="text" /></p>
       <p type="Direcci&oacute;n:"><input v-model="direccion" type="text" /></p>
@@ -21,14 +25,20 @@
       </p>
       <div class="bot">
         <button @click="insertar">Insertar</button>
+        <button @click="actualizar">Actualizar</button>
+        <button @click="eliminar">Eliminar</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { consultarEstudianteFachada } from "../helpers/clienteEstudiante.js";
-import { insertarFachada } from "../helpers/clienteEstudiante.js";
+import {
+  consultarEstudianteFachada,
+  insertarFachada,
+  actualizarFachada,
+  eliminarFachada,
+} from "../helpers/clienteEstudiante.js";
 
 export default {
   data() {
@@ -50,7 +60,15 @@ export default {
       const data = await consultarEstudianteFachada(this.id);
       console.log("Test de componente");
       console.log(data);
+      this.cedula = data.cedula;
       this.nombre = data.nombre;
+      this.apellido = data.apellido;
+      this.genero = data.genero;
+      this.direccion = data.direccion;
+      this.nacionalidad = data.nacionalidad;
+      this.telefono = data.telefono;
+      this.email = data.email;
+      this.fechaNacimiento = data.fechaNacimiento;
     },
     async insertar() {
       const estuBody = {
@@ -66,6 +84,23 @@ export default {
       };
       await insertarFachada(estuBody);
     },
+    async actualizar() {
+      const estuBody = {
+        cedula: this.cedula,
+        nombre: this.nombre,
+        apellido: this.apellido,
+        genero: this.genero,
+        direccion: this.direccion,
+        nacionalidad: this.nacionalidad,
+        telefono: this.telefono,
+        email: this.email,
+        fechaNacimiento: this.fechaNacimiento,
+      };
+      await actualizarFachada(this.id, estuBody);
+    },
+    async eliminar(){
+      await eliminarFachada(this.id);
+    }
   },
 };
 </script>
@@ -109,7 +144,7 @@ button {
   border: 0;
   border-radius: 5px;
 }
-.cabecera{
+.cabecera {
   margin-bottom: 20px;
 }
 </style>
