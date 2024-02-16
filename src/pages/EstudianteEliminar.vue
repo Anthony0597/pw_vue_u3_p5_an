@@ -1,0 +1,25 @@
+<template>
+  <h1>Página Eliminar</h1>
+  <input v-model="id" placeholder="Ingrese el id" type="text" />
+  <button @click="eliminar">Eliminar</button>
+</template>
+
+<script>
+import { eliminarFachada } from "../helpers/clienteEstudiante.js";
+
+export default {
+  data() {
+    return {
+      id: null,
+    };
+  },
+  methods: {
+    async eliminar() {
+      await eliminarFachada(this.id);
+    },
+  },
+};
+</script>
+
+<style>
+</style>
