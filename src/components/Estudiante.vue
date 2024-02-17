@@ -1,13 +1,7 @@
 <template>
   <div class="container">
-    <div class="cabecera">
-      <h1>Componente Estudiante</h1>
-      <input v-model="id" type="text" />
-      <button @click="consultarPorId">Consultar</button>
-    </div>
-
     <div class="form">
-      <h2>Estudiante</h2>
+      <p v-if="flag1" type="Id:"><input v-model="id" type="text" /></p>
       <p type="C&eacute;dula:"><input v-model="cedula" type="text" /></p>
       <p type="Nombre:">
         <input v-model="nombre" placeholder="Nombre" type="text" />
@@ -23,23 +17,14 @@
       <p type="Fecha de nacimiento:">
         <input v-model="fechaNacimiento" type="datetime-local" />
       </p>
-      <div class="bot">
-        <button @click="insertar">Insertar</button>
-        <button @click="actualizar">Actualizar</button>
-        <button @click="eliminar">Eliminar</button>
+      <div class="bot" v-if="flag">
+        <button @click="enviar">{{ btnText }}</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {
-  consultarEstudianteFachada,
-  insertarFachada,
-  actualizarFachada,
-  eliminarFachada,
-} from "../helpers/clienteEstudiante.js";
-
 export default {
   data() {
     return {
@@ -55,6 +40,13 @@ export default {
       fechaNacimiento: null,
     };
   },
+
+  props: {
+    btnText: "",
+    flag:false,
+    flag1:false
+  },
+
   methods: {
     async consultarPorId() {
       const data = await consultarEstudianteFachada(this.id);
@@ -70,8 +62,9 @@ export default {
       this.email = data.email;
       this.fechaNacimiento = data.fechaNacimiento;
     },
-    async insertar() {
-      const estuBody = {
+    enviar() {
+      this.$emit("selecciono", {
+        id:this.id,
         cedula: this.cedula,
         nombre: this.nombre,
         apellido: this.apellido,
@@ -81,26 +74,10 @@ export default {
         telefono: this.telefono,
         email: this.email,
         fechaNacimiento: this.fechaNacimiento,
-      };
-      await insertarFachada(estuBody);
+      });
+      console.log("enviar");
     },
-    async actualizar() {
-      const estuBody = {
-        cedula: this.cedula,
-        nombre: this.nombre,
-        apellido: this.apellido,
-        genero: this.genero,
-        direccion: this.direccion,
-        nacionalidad: this.nacionalidad,
-        telefono: this.telefono,
-        email: this.email,
-        fechaNacimiento: this.fechaNacimiento,
-      };
-      await actualizarFachada(this.id, estuBody);
-    },
-    async eliminar(){
-      await eliminarFachada(this.id);
-    }
+    
   },
 };
 </script>
