@@ -13,7 +13,7 @@ const routes = [
         component:()=>import('@/pages/EstudianteEliminar')
     },
     {
-        path:'/consultar',
+        path:'/consultar/:id',
         component:()=>import('@/pages/EstudianteConsultar')
     },
     {

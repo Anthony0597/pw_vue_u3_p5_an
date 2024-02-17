@@ -44,7 +44,8 @@ export default {
   props: {
     btnText: "",
     flag:false,
-    flag1:false
+    flag1:false,
+    estu:Object
   },
 
   methods: {
@@ -79,6 +80,16 @@ export default {
     },
     
   },
+  watch:{
+    estu(value, oldvalue){
+      if(value !== oldvalue){
+        this.id=this.estu.id;
+        this.cedula=this.estu.cedula;
+        this.nombre=this.estu.nombre;
+        this.apellido=this.estu.apellido;
+      }
+    }
+  }
 };
 </script>
 
